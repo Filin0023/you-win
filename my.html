@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Для вас ❤️</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 50% 40%,
+                    #292936 0%,
+                    #111118 45%,
+                    #050507 100%
+                );
+
+            color: white;
+        }
+
+        /* =================================
+           ФОНОВОЕ СВЕЧЕНИЕ
+        ================================= */
+
+        .glow {
+            position: fixed;
+
+            width: 550px;
+            height: 550px;
+
+            border-radius: 50%;
+
+            background: rgba(120, 100, 255, 0.12);
+
+            filter: blur(110px);
+
+            left: 50%;
+            top: 50%;
+
+            transform: translate(-50%, -50%);
+
+            animation: glow 6s ease-in-out infinite alternate;
+
+            pointer-events: none;
+        }
+
+        @keyframes glow {
+
+            from {
+                transform: translate(-50%, -50%) scale(0.9);
+                opacity: 0.5;
+            }
+
+            to {
+                transform: translate(-50%, -50%) scale(1.15);
+                opacity: 1;
+            }
+
+        }
+
+        /* =================================
+           ЧАСТИЦЫ
+        ================================= */
+
+        .particle {
+            position: fixed;
+
+            width: 3px;
+            height: 3px;
+
+            border-radius: 50%;
+
+            background: white;
+
+            opacity: 0.35;
+
+            animation: float 10s linear infinite;
+
+            pointer-events: none;
+        }
+
+        @keyframes float {
+
+            from {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.35;
+            }
+
+            80% {
+                opacity: 0.35;
+            }
+
+            to {
+                transform: translateY(-10vh);
+                opacity: 0;
+            }
+
+        }
+
+        /* =================================
+           СТРАНИЦЫ
+        ================================= */
+
+        .page {
+            position: absolute;
+
+            inset: 0;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px;
+
+            opacity: 0;
+            visibility: hidden;
+
+            transition:
+                opacity 1s ease,
+                visibility 1s ease;
+        }
+
+        .page.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* =================================
+           ПЕРВАЯ СТРАНИЦА
+        ================================= */
+
+        .first-content {
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 850px;
+
+            text-align: center;
+
+            animation: appear 1.5s ease;
+        }
+
+        .first-content h1 {
+            font-size: clamp(34px, 6vw, 64px);
+
+            font-weight: 500;
+
+            letter-spacing: -1.5px;
+
+            margin-bottom: 25px;
+        }
+
+        .first-content p {
+            font-size: clamp(18px, 2.5vw, 25px);
+
+            line-height: 1.6;
+
+            color: rgba(255, 255, 255, 0.75);
+
+            max-width: 750px;
+
+            margin: 0 auto;
+        }
+
+        /* =================================
+           ВТОРАЯ СТРАНИЦА
+        ================================= */
+
+        .second-content {
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 900px;
+
+            text-align: center;
+
+            animation: secondAppear 1.4s ease;
+        }
+
+        .second-content h2 {
+            font-size: clamp(38px, 6vw, 68px);
+
+            font-weight: 500;
+
+            margin-bottom: 20px;
+        }
+
+        .second-content p {
+            font-size: clamp(19px, 2.5vw, 26px);
+
+            line-height: 1.7;
+
+            color: rgba(255, 255, 255, 0.7);
+
+            max-width: 750px;
+
+            margin: 0 auto;
+        }
+
+        /* =================================
+           ТРЕТЬЯ СТРАНИЦА
+        ================================= */
+
+        .friends-page {
+            position: relative;
+
+            z-index: 2;
+
+            width: min(1050px, 100%);
+
+            height: 80vh;
+
+            animation: friendsAppear 1.5s ease;
+        }
+
+        /* ОЛЕГ */
+
+        .oleg {
+            position: absolute;
+
+            top: 5%;
+            right: 2%;
+
+            width: 440px;
+
+            text-align: left;
+
+            animation: olegAppear 1.4s ease;
+        }
+
+        /* ДАША */
+
+        .dasha {
+            position: absolute;
+
+            left: 2%;
+
+            bottom: 16%;
+
+            width: 440px;
+
+            text-align: left;
+
+            animation: dashaAppear 1.5s ease;
+        }
+
+        .oleg h2,
+        .dasha h2 {
+            font-size: 32px;
+
+            font-weight: 500;
+
+            margin-bottom: 18px;
+        }
+
+        .oleg p,
+        .dasha p {
+            font-size: 17px;
+
+            line-height: 1.7;
+
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .oleg::before,
+        .dasha::before {
+            content: "";
+
+            display: block;
+
+            width: 45px;
+            height: 1px;
+
+            background: rgba(255, 255, 255, 0.35);
+
+            margin-bottom: 20px;
+        }
+
+        /* =================================
+           КНОПКИ
+        ================================= */
+
+        .next-button {
+            margin-top: 45px;
+
+            padding: 14px 30px;
+
+            border: 1px solid rgba(255, 255, 255, 0.2);
+
+            border-radius: 30px;
+
+            background: rgba(255, 255, 255, 0.06);
+
+            color: white;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+            backdrop-filter: blur(12px);
+
+            transition: 0.3s ease;
+        }
+
+        .next-button:hover {
+            background: rgba(255, 255, 255, 0.14);
+
+            transform: translateY(-3px);
+        }
+
+        .next-button:active {
+            transform: scale(0.96);
+        }
+
+        .friends-button {
+            position: absolute;
+
+            bottom: 0;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+        }
+
+        .friends-button:hover {
+            transform: translateX(-50%) translateY(-3px);
+        }
+
+        /* =================================
+           ФИНАЛЬНАЯ СТРАНИЦА
+        ================================= */
+
+        .final-content {
+            position: relative;
+
+            z-index: 2;
+
+            width: min(1050px, 100%);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 70px;
+
+            animation: finalAppear 1.5s ease;
+        }
+
+        .final-text {
+            flex: 1;
+
+            text-align: left;
+        }
+
+        .final-text h2 {
+            font-size: clamp(35px, 5vw, 58px);
+
+            font-weight: 500;
+
+            line-height: 1.2;
+
+            margin-bottom: 25px;
+        }
+
+        .final-text p {
+            font-size: 19px;
+
+            line-height: 1.7;
+
+            color: rgba(255, 255, 255, 0.7);
+
+            max-width: 520px;
+        }
+
+        .hearts {
+            margin-top: 35px;
+
+            font-size: 25px;
+
+            letter-spacing: 5px;
+
+            animation: hearts 2s ease-in-out infinite alternate;
+        }
+
+        /* ФОТО */
+
+        .final-photo {
+            flex: 0 0 380px;
+        }
+
+        .final-photo img {
+            width: 360px;
+            height: 450px;
+
+            object-fit: cover;
+
+            border-radius: 25px;
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.5),
+                0 0 50px rgba(120, 100, 255, 0.08);
+        }
+
+        /* =================================
+           АНИМАЦИИ
+        ================================= */
+
+        @keyframes appear {
+
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        @keyframes secondAppear {
+
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        @keyframes friendsAppear {
+
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+
+        }
+
+        @keyframes olegAppear {
+
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+        }
+
+        @keyframes dashaAppear {
+
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+        }
+
+        @keyframes finalAppear {
+
+            from {
+                opacity: 0;
+                transform: translateY(35px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        @keyframes hearts {
+
+            from {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+
+            to {
+                transform: scale(1.08);
+                opacity: 1;
+            }
+
+        }
+
+        /* =================================
+           ТЕЛЕФОН
+        ================================= */
+
+        @media (max-width: 750px) {
+
+            html,
+            body {
+                overflow-y: auto;
+            }
+
+            .page {
+                min-height: 100vh;
+
+                padding: 25px;
+            }
+
+            /* ТРЕТЬЯ СТРАНИЦА */
+
+            .friends-page {
+                height: auto;
+
+                min-height: 90vh;
+
+                display: flex;
+
+                flex-direction: column;
+
+                justify-content: center;
+
+                gap: 40px;
+            }
+
+            .oleg,
+            .dasha {
+                position: relative;
+
+                top: auto;
+                right: auto;
+                bottom: auto;
+                left: auto;
+
+                width: 100%;
+
+                text-align: center;
+            }
+
+            .oleg::before,
+            .dasha::before {
+                margin: 0 auto 18px;
+            }
+
+            .oleg h2,
+            .dasha h2 {
+                font-size: 28px;
+            }
+
+            .oleg p,
+            .dasha p {
+                font-size: 16px;
+            }
+
+            .friends-button {
+                position: relative;
+
+                bottom: auto;
+                left: auto;
+
+                transform: none;
+
+                align-self: center;
+
+                margin-top: 5px;
+            }
+
+            .friends-button:hover {
+                transform: translateY(-3px);
+            }
+
+            /* ФИНАЛ */
+
+            .final-content {
+                flex-direction: column-reverse;
+
+                text-align: center;
+
+                gap: 35px;
+            }
+
+            .final-text {
+                text-align: center;
+            }
+
+            .final-text p {
+                margin: 0 auto;
+            }
+
+            .final-photo {
+                flex: none;
+            }
+
+            .final-photo img {
+                width: min(75vw, 300px);
+
+                height: min(90vw, 370px);
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- =================================
+         ФОНОВОЕ СВЕЧЕНИЕ
+    ================================= -->
+
+    <div class="glow"></div>
+
+
+    <!-- =================================
+         ЧАСТИЦЫ
+    ================================= -->
+
+    <div class="particle" style="left: 8%; animation-delay: 0s;"></div>
+    <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+    <div class="particle" style="left: 35%; animation-delay: 5s;"></div>
+    <div class="particle" style="left: 50%; animation-delay: 1s;"></div>
+    <div class="particle" style="left: 65%; animation-delay: 4s;"></div>
+    <div class="particle" style="left: 80%; animation-delay: 3s;"></div>
+    <div class="particle" style="left: 92%; animation-delay: 6s;"></div>
+
+
+    <!-- =================================
+         СТРАНИЦА 1
+    ================================= -->
+
+    <section class="page active" id="page1">
+
+        <div class="first-content">
+
+            <h1>
+                Спасибо за то, что вы рядом
+            </h1>
+
+            <p>
+                За всё время нашей дружбы я понял,
+                что вы — одни из самых близких мне людей.
+            </p>
+
+            <button
+                class="next-button"
+                onclick="showPage(2)"
+            >
+                Дальше →
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         СТРАНИЦА 2
+    ================================= -->
+
+    <section class="page" id="page2">
+
+        <div class="second-content">
+
+            <h2>
+                Это вам
+            </h2>
+
+            <p>
+                Есть несколько вещей,
+                которые я давно хотел сказать.
+            </p>
+
+            <button
+                class="next-button"
+                onclick="showPage(3)"
+            >
+                Надо прочитать →
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         СТРАНИЦА 3
+    ================================= -->
+
+    <section class="page" id="page3">
+
+        <div class="friends-page">
+
+
+            <!-- ОЛЕГ -->
+
+            <div class="oleg">
+
+                <h2>
+                    Олегу
+                </h2>
+
+                <p>
+                    Спасибо тебе за то, что ты всегда был рядом,
+                    особенно тогда, когда мне это было действительно нужно.
+
+                    <br><br>
+
+                    За всё время нашей дружбы было много разных моментов —
+                    хороших, смешных, иногда сложных.
+                    Но я всегда знал, что могу на тебя рассчитывать.
+
+                    <br><br>
+
+                    Ты тот человек, который не просто был рядом,
+                    а действительно помогал, когда это было необходимо.
+
+                    <br><br>
+
+                    Я очень ценю всё, что ты для меня сделал.
+                    И самое главное — спасибо тебе просто за то,
+                    что ты есть в моей жизни.
+
+                    <br><br>
+
+                    <strong>
+                        Ты тот человек, которому я обязан жизнью.
+                    </strong>
+                </p>
+
+            </div>
+
+
+            <!-- ДАША -->
+
+            <div class="dasha">
+
+                <h2>
+                    Даше
+                </h2>
+
+                <p>
+                    Ты стала для меня не просто девушкой Олега,
+                    а действительно близким человеком и хорошей подругой.
+
+                    <br><br>
+
+                    Спасибо за твоё отношение ко мне,
+                    за поддержку, и за то что у моего друга такая прекрасная девушка,
+                    со временем вы с олегом стали мне как семья
+                    в моей жизни.
+
+                    <br><br>
+
+                    Я очень ценю, что вы с олегом появились у меня
+                </p>
+
+            </div>
+
+
+            <!-- КНОПКА -->
+
+            <button
+                class="next-button friends-button"
+                onclick="showPage(4)"
+            >
+                Дальше →
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         ФИНАЛЬНАЯ СТРАНИЦА
+    ================================= -->
+
+    <section class="page" id="page4">
+
+        <div class="final-content">
+
+
+            <!-- ТЕКСТ -->
+
+            <div class="final-text">
+
+                <h2>
+                    Ещё раз спасибо за всё
+                </h2>
+
+                <p>
+                    За все моменты, разговоры, поддержку,
+                    смех и просто за то, что вы есть в моей жизни.
+                </p>
+
+                <div class="hearts">
+                    ❤️ &nbsp; ❤️ &nbsp; ❤️
+                </div>
+
+            </div>
+
+
+            <!-- ФОТО -->
+
+            <div class="final-photo">
+
+                <img
+                    src="images/friends.jpg"
+                    alt="Наша фотография"
+                >
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         JAVASCRIPT
+    ================================= -->
+
+    <script>
+
+        function showPage(pageNumber) {
+
+            const pages = document.querySelectorAll(".page");
+
+            pages.forEach(page => {
+
+                page.classList.remove("active");
+
+            });
+
+
+            setTimeout(() => {
+
+                const nextPage =
+                    document.getElementById("page" + pageNumber);
+
+                nextPage.classList.add("active");
+
+            }, 400);
+
+        }
+
+    </script>
+
+</body>
+</html>
